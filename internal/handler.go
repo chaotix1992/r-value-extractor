@@ -51,6 +51,10 @@ func FilterCSV(p_values [][]string, r_values [][]string, max_val float64, placeh
 	for i := range(len(p_values)) {
 		row := []string{}
 		for j := range(len(p_values[i])) {
+			if p_values[i][j] == "" {
+				row = append(row, "")
+				continue
+			}
 			p_value, err := strconv.ParseFloat(p_values[i][j], 64)
 			if err != nil {
 				row = append(row, r_values[i][j])
