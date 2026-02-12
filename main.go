@@ -56,6 +56,8 @@ func main() {
 	}
 
 	fmt.Println("CSV files successfully filtered and written to", outputPath)
+	fmt.Println("Press ENTER to exit...")
+	bufio.NewReader(os.Stdin).ReadBytes('\n')
 }
 
 // Helper function to trim newline characters
