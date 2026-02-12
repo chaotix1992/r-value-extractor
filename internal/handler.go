@@ -44,13 +44,17 @@ func WriteCSV(data [][]string, path string) error {
 	return nil
 }
 
-func FilterCSV(p_values [][]string, r_values [][]string, max_val float64, placeholder string) [][]string {
-	// Iterate over first array. If value > 0.03, discard the respective r_value entry, else keep it
+func FilterCSV(p_values [][]string, r_values [][]string, max_val float64, placeholder string, mirror bool) [][]string {
+	// Iterate over first array. If value > max_val, discard the respective r_value entry, else keep it
 	filtered := [][]string{}
 
 	for i := range(len(p_values)) {
 		row := []string{}
 		for j := range(len(p_values[i])) {
+			if j != 0 && mirror && j < i {
+				row = append(row, "")
+				continue
+			}
 			if p_values[i][j] == "" {
 				row = append(row, "")
 				continue

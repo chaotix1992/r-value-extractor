@@ -27,6 +27,10 @@ func main() {
 	fmt.Print("Enter the placeholder value that should be entered, if the maximum threshold is crossed: ")
 	placeholder, _ := reader.ReadString('\n')
 
+	fmt.Print("Only keep values in the upper right half of the mirrored matrix? (y|n) ")
+	mirror, _ := reader.ReadString('\n')
+
+
 	// Remove newline characters
 	inputPath1 = trimNewline(inputPath1)
 	inputPath2 = trimNewline(inputPath2)
@@ -34,6 +38,7 @@ func main() {
 	maximum = trimNewline(maximum)
 	max_val, _ := strconv.ParseFloat(maximum, 64)
 	placeholder = trimNewline(placeholder)
+	mirror = trimNewline(mirror)
 
 	// Read first CSV
 	data1, err := internal.ReadCSV(inputPath1)
@@ -53,8 +58,13 @@ func main() {
 		fmt.Printf("Error in dimensions; P-Value dimensions: %dx%d - R-Value dimensions: %dx%d\n", len(data2), len(data2[0]), len(data1), len(data1[0]))
 		return
 	}
+
+	mirror_bool := false
+	if mirror == "y" || mirror == "Y" {
+		mirror_bool = true
+	}
 	// Combine data
-	combined := internal.FilterCSV(data2, data1, max_val, placeholder)
+	combined := internal.FilterCSV(data2, data1, max_val, placeholder, mirror_bool)
 
 	// Write output CSV
 	err = internal.WriteCSV(combined, outputPath)
