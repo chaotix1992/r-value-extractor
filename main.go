@@ -18,11 +18,14 @@ func main() {
 	fmt.Print("Enter P-Value CSV file path: ")
 	inputPath2, _ := reader.ReadString('\n')
 
+	fmt.Print("Enter output CSV file path: ")
+	outputPath, _ := reader.ReadString('\n')
+
 	fmt.Print("Enter the maximum P-Value value that should be filtered: ")
 	maximum, _ := reader.ReadString('\n')
 
-	fmt.Print("Enter output CSV file path: ")
-	outputPath, _ := reader.ReadString('\n')
+	fmt.Print("Enter the placeholder value that should be entered, if the maximum threshold is crossed: ")
+	placeholder, _ := reader.ReadString('\n')
 
 	// Remove newline characters
 	inputPath1 = trimNewline(inputPath1)
@@ -30,6 +33,7 @@ func main() {
 	outputPath = trimNewline(outputPath)
 	maximum = trimNewline(maximum)
 	max_val, _ := strconv.ParseFloat(maximum, 64)
+	placeholder = trimNewline(placeholder)
 
 	// Read first CSV
 	data1, err := internal.ReadCSV(inputPath1)
@@ -46,7 +50,7 @@ func main() {
 	}
 
 	// Combine data
-	combined := internal.FilterCSV(data2, data1, max_val)
+	combined := internal.FilterCSV(data2, data1, max_val, placeholder)
 
 	// Write output CSV
 	err = internal.WriteCSV(combined, outputPath)

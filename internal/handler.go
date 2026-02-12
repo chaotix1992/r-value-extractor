@@ -44,7 +44,7 @@ func WriteCSV(data [][]string, path string) error {
 	return nil
 }
 
-func FilterCSV(p_values [][]string, r_values [][]string, max_val float64) [][]string {
+func FilterCSV(p_values [][]string, r_values [][]string, max_val float64, placeholder string) [][]string {
 	// Iterate over first array. If value > 0.03, discard the respective r_value entry, else keep it
 	filtered := [][]string{}
 
@@ -56,7 +56,7 @@ func FilterCSV(p_values [][]string, r_values [][]string, max_val float64) [][]st
 				row = append(row, r_values[i][j])
 			} else {
 				if p_value > max_val {
-					row = append(row, "")
+					row = append(row, placeholder)
 				} else {
 					row = append(row, r_values[i][j])
 				}
