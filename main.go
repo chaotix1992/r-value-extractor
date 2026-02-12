@@ -49,6 +49,10 @@ func main() {
 		return
 	}
 
+	if len(data2) != len(data1) || len(data2[0]) != len(data1[0]) {
+		fmt.Printf("Error in dimensions; P-Value dimensions: %dx%d - R-Value dimensions: %dx%d\n", len(data2), len(data2[0]), len(data1), len(data1[0]))
+		return
+	}
 	// Combine data
 	combined := internal.FilterCSV(data2, data1, max_val, placeholder)
 
